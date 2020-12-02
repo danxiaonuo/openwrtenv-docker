@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     
-	# 运行步骤
+     # 运行步骤
     steps:
 	
     - name: 触发构建镜像
