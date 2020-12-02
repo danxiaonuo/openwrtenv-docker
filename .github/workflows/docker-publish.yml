@@ -53,6 +53,6 @@ jobs:
       uses: peter-evans/repository-dispatch@v1
       if: (!contains(github.event.action, 'test')) || (github.event.inputs.test == 'true' && github.event.inputs.test  != 'false')
       with:
-        token: ${{ secrets.ACTIONS_TRIGGER }}
+        token: ${{ secrets.DOCKER_TOKEN }}
         repository: danxiaonuo/openwrtenv-docker
         event-type: Base Image Update
