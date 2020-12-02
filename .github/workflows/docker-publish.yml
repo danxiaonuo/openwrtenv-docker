@@ -1,0 +1,58 @@
+name: Docker Images Publish
+
+on:
+  repository_dispatch:
+  push:
+    paths:
+      - 'Dockerfile'
+  workflow_dispatch:
+    inputs:
+      test:
+        description: 'Build test'
+        required: false
+        default: 'false'
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        BASE_IMAGE_TAG: [20.04, 18.04]
+        include:
+          - BASE_IMAGE_TAG: 20.04
+            DOCKER_TAG: latest,20.04
+            DEPENDS_LIST: depends-ubuntu-2004
+          - BASE_IMAGE_TAG: 18.04
+            DOCKER_TAG: 18.04
+            DEPENDS_LIST: depends-ubuntu-1804
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build and push
+      uses: docker/build-push-action@v1
+      with:
+        push: true
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: danxiaonuo/openwrtenv
+        tags: ${{ matrix.DOCKER_TAG }}
+        build_args: BASE_IMAGE_TAG=${{ matrix.BASE_IMAGE_TAG }},DEPENDS_LIST=${{ matrix.DEPENDS_LIST }}
+        dockerfile: Dockerfile
+        path: .
+
+  tigger:
+    runs-on: ubuntu-latest
+    needs: publish
+
+    steps:
+    - name: Trigger other image builds
+      uses: peter-evans/repository-dispatch@v1
+      if: (!contains(github.event.action, 'test')) || (github.event.inputs.test == 'true' && github.event.inputs.test  != 'false')
+      with:
+        token: ${{ secrets.ACTIONS_TRIGGER }}
+        repository: danxiaonuo/openwrtenv-docker
+        event-type: Base Image Update
