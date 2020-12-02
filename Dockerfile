@@ -20,7 +20,7 @@ ARG DEPENDS_LIST=depends-ubuntu-2004
 RUN set -eux \
     && apt-get update -qq && apt-get upgrade -qqy \
     && apt-get install -qqy git sudo wget curl zsh vim nano tmux tree htop screen rsync gnupg ca-certificates uuid-runtime tzdata openssh-server lrzsz xz-utils \
-    apt-get install -qqy $(curl -fsSL git.io/${DEPENDS_LIST}) \
+    && apt-get install -qqy $(curl -fsSL git.io/${DEPENDS_LIST}) \
     && wget --no-check-certificate https://cdn.jsdelivr.net/gh/danxiaonuo/openwrtenv-docker@main/scripts/configure.sh \
     && chmod +x configure.sh \
     && ./configure.sh \
