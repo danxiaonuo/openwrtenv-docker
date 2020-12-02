@@ -1,11 +1,3 @@
-wget -q https://build-scripts.project-openwrt.eu.org/init_build_environment.sh
-sed -i 's/apt install/apt-get install/g' init_build_environment.sh
-sed -i 's/apt clean/apt-get clean/g' init_build_environment.sh
-sed -i 's/apt full-upgrade/apt-get full-upgrade/g' init_build_environment.sh
-sed -i '/Chinese/d' init_build_environment.sh
-chmod +x init_build_environment.sh
-./init_build_environment.sh
-rm init_build_environment.sh
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 mkdir /var/run/sshd
 useradd -m -G sudo -s /usr/bin/zsh admin
