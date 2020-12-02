@@ -1,5 +1,3 @@
-apt-get update -qq && apt-get upgrade -qqy
-apt-get install -qqy git sudo wget curl zsh vim nano tmux tree htop screen rsync gnupg ca-certificates uuid-runtime tzdata openssh-server lrzsz xz-utils
 wget -q https://build-scripts.project-openwrt.eu.org/init_build_environment.sh
 sed -i 's/apt install/apt-get install/g' init_build_environment.sh
 sed -i 's/apt clean/apt-get clean/g' init_build_environment.sh
