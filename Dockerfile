@@ -17,6 +17,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # 预设环境
 RUN set -eux \
+    && apt-get update -qq && apt-get upgrade -qqy \
+    && apt-get install -qqy git sudo wget curl zsh vim nano tmux tree htop screen rsync gnupg ca-certificates uuid-runtime tzdata openssh-server lrzsz xz-utils \
     && wget --no-check-certificate https://cdn.jsdelivr.net/gh/danxiaonuo/openwrtenv-docker@main/scripts/configure.sh \
     && chmod +x configure.sh \
     && ./configure.sh \
