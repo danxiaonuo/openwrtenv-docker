@@ -22,7 +22,7 @@ on:
       build:
         description: 'build openwrtenv'
         required: false
-        default: 'false'
+        default: 'build openwrtenv'
   # 每天的0点钟自动更新
   schedule:
      - cron: '0 0 * * *'
@@ -70,7 +70,8 @@ jobs:
     needs: build
     
     # 运行步骤
-    steps:  	
+    steps:
+        	
     - name: 触发构建镜像
       uses: peter-evans/repository-dispatch@v1
       if: (!contains(github.event.action, 'build')) || (github.event.inputs.build == 'true' && github.event.inputs.build  != 'false')
