@@ -71,7 +71,7 @@ jobs:
     
      # 运行步骤
     steps:
-	
+    	
     - name: 触发构建镜像
       uses: peter-evans/repository-dispatch@v1
       if: (!contains(github.event.action, 'build')) || (github.event.inputs.build == 'true' && github.event.inputs.build  != 'false')
