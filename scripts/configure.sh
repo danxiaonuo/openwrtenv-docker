@@ -1,3 +1,4 @@
+apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 mkdir /var/run/sshd
 useradd -m -G sudo -s /usr/bin/zsh admin
