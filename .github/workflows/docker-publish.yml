@@ -16,6 +16,7 @@ jobs:
   publish:
     name: Publish
     runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
     strategy:
       fail-fast: false
       matrix:
