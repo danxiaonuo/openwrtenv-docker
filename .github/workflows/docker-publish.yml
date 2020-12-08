@@ -10,22 +10,21 @@ name: 自动编译并上传镜像
 
 # 设置触发条件
 on:
-  # 仓库触发工作流
-  repository_dispatch:
-  # 编辑文件触发开始编译
-  push:
-    paths:
-      - 'Dockerfile'
   # 手动触发工作流
   workflow_dispatch:
     inputs:
-      build:
-        description: 'build openwrtenv'
-        required: false
-        default: 'build openwrtenv'
-  # 每天的0点钟自动更新
+      name:
+        description: 'build-openwrtenv'
+        required: true
+        default: '自动编译openwrtenv'
+
+  # 定时触发编译(每天早5点)
   schedule:
-     - cron: '0 0 * * *'
+    - cron: 0 21 * * *
+
+  # 点赞☆Star触发编译
+  watch:
+     types: [started]
      
  # 任务集
 jobs:
@@ -69,3 +68,9 @@ jobs:
         docker login -u ${{ secrets.ALIYUN_USERNAME }} -p ${{ secrets.ALIYUN_PASSWORD }} registry.cn-hongkong.aliyuncs.com
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/openwrtenv:${{ matrix.BASE_IMAGE_TAG }} registry.cn-hongkong.aliyuncs.com/${{ secrets.ALIYUN_NAMESPACES }}/openwrtenv:${{ matrix.BASE_IMAGE_TAG }}
         docker push registry.cn-hongkong.aliyuncs.com/${{ secrets.ALIYUN_NAMESPACES }}/openwrtenv:${{ matrix.BASE_IMAGE_TAG }}
+  
+    - name: 删除旧的GitHub-workflow
+      uses: ActionsRML/delete-workflow-runs@main
+      with:
+        retain_days: 0
+        keep_minimum_runs: 1    #保留多少个workflow不删除
