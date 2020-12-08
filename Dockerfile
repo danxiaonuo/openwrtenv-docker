@@ -18,7 +18,7 @@ ARG DEPENDS_LIST=depends-ubuntu-2004
 
 # 预设环境
 RUN set -eux \
-    && apt-get update -qq && apt-get upgrade -qqy \
+    && apt-get update -qqy && apt-get upgrade -qqy \
     && apt-get install -qqy git sudo wget curl zsh vim nano tmux tree htop screen rsync gnupg ca-certificates uuid-runtime tzdata openssh-server lrzsz xz-utils \
     && apt-get install -qqy $(curl -fsSL git.io/${DEPENDS_LIST}) tree \
     && apt-get -qqy autoremove --purge \
