@@ -18,9 +18,11 @@ ARG DEPENDS_LIST=depends-ubuntu-2004
 
 # 预设环境
 RUN set -eux \
-    && apt-get update -qq && apt-get upgrade -qqy \
-    && apt-get install -qqy git sudo wget curl zsh vim nano tmux tree htop screen rsync gnupg ca-certificates uuid-runtime tzdata openssh-server lrzsz xz-utils \
-    && apt-get install -qqy $(curl -fsSL git.io/${DEPENDS_LIST}) \
+    && sudo -E apt-get update -qq && sudo -E apt-get upgrade -qqy \
+    && sudo -E apt-get install -qqy git sudo wget curl zsh vim nano tmux tree htop screen rsync gnupg ca-certificates uuid-runtime tzdata openssh-server lrzsz xz-utils \
+    && sudo -E apt-get install -qqy $(curl -fsSL git.io/${DEPENDS_LIST}) tree \
+    && sudo -E apt-get -qqy autoremove --purge \
+    && sudo -E apt-get -qqy clean \
     && wget --no-check-certificate https://raw.githubusercontent.com/danxiaonuo/openwrtenv-docker/main/scripts/configure.sh \
     && chmod +x configure.sh \
     && ./configure.sh \
