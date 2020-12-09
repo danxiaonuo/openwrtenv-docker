@@ -36,7 +36,6 @@ jobs:
       fail-fast: false
       matrix:
         BASE_IMAGE_TAG: [20.04, 18.04]
-        IMAGE_TAG_LS: [latest,20.04]
         include:
           - BASE_IMAGE_TAG: 20.04
             DOCKER_TAG: latest,20.04
@@ -44,7 +43,8 @@ jobs:
           - BASE_IMAGE_TAG: 18.04
             DOCKER_TAG: 18.04
             DEPENDS_LIST: depends-ubuntu-1804
-    
+        IMAGE_TAG_LS: [latest,20.04]
+          
     # 运行步骤
     steps:
     
